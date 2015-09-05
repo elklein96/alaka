@@ -22,7 +22,7 @@ var server = http.createServer(app);
 
 app.use(express.static(__dirname + '/public'));
 
-server.listen(process.env.PORT || 8888, function(){
+server.listen(process.env.PORT || app.get('port'), function(){
   console.log("Express server listening on port %d", this.address().port);
 });
 
