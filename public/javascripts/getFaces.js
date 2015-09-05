@@ -1,4 +1,4 @@
-var socket = io.connect('http://ec2-52-6-151-159.compute-1.amazonaws.com/');
+var socket = io.connect('http://ec2-52-6-151-159.compute-1.amazonaws.com:8888');
 
 var canvas = document.getElementById('player');
 var context = canvas.getContext('2d');
