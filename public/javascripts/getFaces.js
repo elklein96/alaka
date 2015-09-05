@@ -1,6 +1,6 @@
 var socket = io.connect('http://ec2-52-6-151-159.compute-1.amazonaws.com/');
 
-var canvas = document.getElementById('canvas-video');
+var canvas = document.getElementById('player');
 var context = canvas.getContext('2d');
 var img = new Image();
 
