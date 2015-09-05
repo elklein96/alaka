@@ -5,8 +5,6 @@ var querystring = require('querystring');
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
-var cv = require('opencv');
-var io = require('socket.io').listen(server);
 
 var generateRandomString = function(length) {
   var text = '';
@@ -27,42 +25,16 @@ server.listen(process.env.PORT || 8888, function(){
   console.log("Express server listening on port %d", this.address().port);
 });
 
-app.get('/', function(req, res) {
-  // camera properties
-  var camWidth = 320;
-  var camHeight = 240;
-  var camFps = 10;
-  var camInterval = 1000 / camFps;
-
-  // face detection properties
-  var rectColor = [0, 255, 0];
-  var rectThickness = 2;
-
-  // initialize camera
-  var camera = new cv.VideoCapture(0);
-  camera.setWidth(camWidth);
-  camera.setHeight(camHeight);
+app.get('/search', function(req, res) {
+  var io = require('socket.io').listen(server);
 
   io.sockets.on('connection', function (socket) {
-    setInterval(function() {
-      camera.read(function(err, im) {
-        if (err) throw err;
-
-        im.detectObject('./node_modules/opencv/data/haarcascade_frontalface_alt2.xml', {}, function(err, faces) {
-          if (err) throw err;
-
-          for (var i = 0; i < faces.length; i++) {
-            face = faces[i];
-            im.rectangle([face.x, face.y], [face.width, face.height], rectColor, rectThickness);
-          }
-
-          socket.emit('frame', { buffer: im.toBuffer() });
-        });
-      });
-    }, camInterval);
+    
   });
 
-  /*
+  /*if(req.query.playlist_url.charAt(req.query.playlist_url.length -1) != '/')
+    req.query.playlist_url = req.query.playlist_url+"/";
+
   var playlist_id = req.query.playlist_url.match('playlist\/(.*)\/')[1];
 
   var playlistOptions = {
