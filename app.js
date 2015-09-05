@@ -6,6 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var cv = require('opencv');
+var io = require('socket.io').listen(server);
 
 var generateRandomString = function(length) {
   var text = '';
@@ -26,9 +27,7 @@ server.listen(process.env.PORT || 8888, function(){
   console.log("Express server listening on port %d", this.address().port);
 });
 
-app.get('/search', function(req, res) {
-  var io = require('socket.io').listen(server);
-
+app.get('/', function(req, res) {
   // camera properties
   var camWidth = 320;
   var camHeight = 240;
