@@ -45,6 +45,10 @@
         htracker.init(videoInput, canvasInput);
         htracker.start();
 
+        document.addEventListener('headtrackrStatus', function(event){
+          console.log(event.status);
+        });
+
         document.addEventListener('facetrackingEvent', function(event){
           if(event.context === 1){
             document.removeEventListener('facetrackingEvent', function(e){
