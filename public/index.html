@@ -41,7 +41,7 @@
         var canvasInput = document.getElementById('inputCanvas');
         var ctx=canvasInput.getContext("2d");
 
-        var htracker = new headtrackr.Tracker({ getUserMedia : true, ui : false, altVideo : {mp4: "http://108.24.127.105/media/Movies/Step%20Brothers/Step%20Brothers%202008.mkv"} });
+        var htracker = new headtrackr.Tracker({ ui : false, altVideo : {mp4: "http://108.24.127.105/media/Movies/Step%20Brothers/Step%20Brothers%202008.mkv"} });
         htracker.init(videoInput, canvasInput);
         htracker.start();
 
@@ -56,7 +56,7 @@
               faceFrames.push(imgData.data);
 
               $.ajax({
-                url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/search',
+                url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
                 data: {
                   faces: faceFrames
                 },
