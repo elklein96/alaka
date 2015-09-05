@@ -22,7 +22,7 @@ var server = http.createServer(app);
 var child  = spawn("python", ["/mrisa/mrisa_server.py"]);
 
 child.stdout.on('data', function(data) {
-  console.log(data.toString());
+  console.log("TEST "+data.toString());
 });
 
 app.use(express.static(__dirname + '/public'));
