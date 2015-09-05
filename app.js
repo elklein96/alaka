@@ -29,10 +29,6 @@ server.listen(process.env.PORT || 8888, function(){
 app.get('/search', function(req, res) {
   var io = require('socket.io').listen(server);
 
-  io.sockets.on('connection', function (socket) {
-    
-  });
-
   // camera properties
   var camWidth = 320;
   var camHeight = 240;
@@ -48,7 +44,7 @@ app.get('/search', function(req, res) {
   camera.setWidth(camWidth);
   camera.setHeight(camHeight);
 
-  module.exports = function (socket) {
+  io.sockets.on('connection', function (socket) {
     setInterval(function() {
       camera.read(function(err, im) {
         if (err) throw err;
@@ -65,11 +61,9 @@ app.get('/search', function(req, res) {
         });
       });
     }, camInterval);
-  };
+  });
 
-  /*if(req.query.playlist_url.charAt(req.query.playlist_url.length -1) != '/')
-    req.query.playlist_url = req.query.playlist_url+"/";
-
+  /*
   var playlist_id = req.query.playlist_url.match('playlist\/(.*)\/')[1];
 
   var playlistOptions = {
