@@ -28,10 +28,6 @@ child.stdout.on('data', function(data) {
 });
 
 app.use(express.static(__dirname + '/public'));
-app.use(function(req, res, next){
-  res.setHeader('content-type', 'application/json');
-  next();
-});
 app.use( bodyParser.json({limit:'1mb'}));
 app.use(bodyParser.urlencoded({
   extended: true
