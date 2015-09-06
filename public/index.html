@@ -63,6 +63,9 @@
                   actors: response.actors,
                   movie: response.movie
                 });
+              },
+              error: function(response) {
+                console.log(response);
               }
             });
           }
