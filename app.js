@@ -35,9 +35,7 @@ app.use(function(req, res, next){
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
-})); 
-app.use(express.json());
-app.use(express.urlencoded());
+}));
 
 server.listen(process.env.PORT || 8888, function(){
   console.log("Express server listening on port %d", this.address().port);
