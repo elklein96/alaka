@@ -36,7 +36,7 @@ process.on("uncaughtException", function(err){
   console.log(err);
 });
 
-app.get('/parse', function(req, res) {
+app.get('http://ec2-52-6-151-159.compute-1.amazonaws.com/parse', function(req, res) {
   var face = req.query.face;
   var result = [];
   face = toBuffer(face);
