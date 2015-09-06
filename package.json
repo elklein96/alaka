@@ -10,6 +10,7 @@
     "url": "https://github.com/elklein96/alaka.git"
   },
   "dependencies": {
+    "body-parser": "^1.13.3",
     "express": "~4.0.0",
     "querystring": "~0.2.0",
     "request": "~2.34.0",
