@@ -55,7 +55,7 @@
             $.ajax({
               method: 'POST',
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
-              contentType: "multipart/form-data",
+              contentType: "application/json",
               data: JSON.stringify({
                 face: imgData
               }),
