@@ -43,8 +43,8 @@ process.on("uncaughtException", function(err){
 
 app.post('/parse', function(req, res) {
 
-  console.log(req.body.data);
-  /*var face = req.body.face;
+  //console.log(req.body);
+  var face = JSON.parse(req.body).face;
   var result = [];
   face = toBuffer(face);
 
@@ -69,6 +69,6 @@ app.post('/parse', function(req, res) {
   
   res.send({
     'actors': result
-  });*/
+  });
   //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
 });

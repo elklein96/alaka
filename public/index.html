@@ -57,7 +57,7 @@
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
               contentType: "application/json",
               data: JSON.stringify({
-                face: imgData
+                face: imgData.data
               }),
               success: function(response) {
                 console.log(response);
