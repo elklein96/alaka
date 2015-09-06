@@ -49,7 +49,7 @@ app.post('/parse', function(req, res) {
   
   console.log(face);
 
-  fs.writeFile('./public/cache/image'+generateRandomString(8), new Buffer(face), function(err){
+  fs.writeFile('./public/cache/image'+generateRandomString(8), "hello fuckers!", function(err){
     console.log(err);
   });
   
