@@ -56,7 +56,7 @@
               method: 'POST',
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
               contentType: "application/json",
-              data: imgData.data.buffer,
+              data: JSON.stringify(imgData.data.buffer),
               success: function(response) {
                 console.log(response);
                 infoPlaceholder.innerHTML = infoTemplate({
