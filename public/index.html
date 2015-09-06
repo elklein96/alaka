@@ -6,10 +6,12 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body style="overflow:hidden;">
     <div class="container">
-      <canvas id="inputCanvas"><video id="inputVideo" autoplay loop></video></canvas>
-      
+      <video id="inputVideo" autoplay loop></video>
+      <canvas id="inputCanvas" style="display:none;"></canvas>
+      <button id="button" class="btn-circle"></button>
+
       <div id="info"></div>
     </div>
 
@@ -30,6 +32,7 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="jquery.longpress.js"></script>
     <script src="/javascripts/headtracker.js"></script> 
     <script>
       (function() {
@@ -41,41 +44,59 @@
         var htracker = new headtrackr.Tracker({ getUserMedia: true, ui : false, altVideo : {mp4: "http://108.24.127.105/media/Movies/Step%20Brothers/Step%20Brothers%202008.mkv"} });
         htracker.init(videoInput, canvasInput);
         htracker.start();
-
+        
         document.addEventListener('headtrackrStatus', function(event){
           console.log(event.status);
         });
 
-        document.addEventListener('facetrackingEvent', function(event){
-          if(event.confidence === 1){
-            $.ajax({
-              method: 'POST',
-              url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
-              contentType: "multipart/form-data",
-              data: {
-                face: canvasInput.toDataURL(),
-                left: event.x-event.width/2,
-                top: event.y-event.height/2,
-                right: event.width,
-                bottom: event.height
-              },
-              success: function(response) {
-                console.log(response);
-                infoPlaceholder.innerHTML = infoTemplate({
-                  actors: response.actors,
-                  movie: response.movie
-                });
-              },
-              error: function(response) {
-                console.log(response);
-              }
-            });
-          }
-          ctx.beginPath();
-          ctx.strokeStyle="green";
-          ctx.lineWidth="4";
-          ctx.rect(event.x-event.width/2, event.y-event.height/2, event.width, event.height);
-          ctx.stroke();
+        $(window).resize(function(){
+          var height = $(window).height();
+          $(videoInput).css('height', height);
+
+          var videoWidth = $(videoInput).width(),
+          windowWidth = $(window).width(),
+          marginLeftAdjust =   (windowWidth - videoWidth) / 2;
+
+          $(videoInput).css({
+            'height': height, 
+            'marginLeft' : marginLeftAdjust
+          });
+        }).resize();
+
+        $('#button').longpress(function() {
+          document.addEventListener('facetrackingEvent', function(event){
+            if(event.confidence === 1){
+              $.ajax({
+                method: 'POST',
+                url: '/parse',
+                contentType: "application/json",
+                data: JSON.stringify({
+                  'raw': canvasInput.toDataURL(),
+                  'left': (event.x-event.width/2),
+                  'top': (event.y-event.height/2),
+                  'right': event.width,
+                  'bottom': event.height
+                }),
+                success: function(response) {
+                  console.log(response);
+                  infoPlaceholder.innerHTML = infoTemplate({
+                    actors: response.actors,
+                    movie: response.movie
+                  });
+                },
+                error: function(response) {
+                  console.log(response);
+                }
+              });
+            }
+            /*ctx.beginPath();
+            ctx.strokeStyle="green";
+            ctx.lineWidth="4";
+            ctx.rect(event.x-event.width/2, event.y-event.height/2, event.width, event.height);
+            ctx.stroke();*/
+          });
+        }, function(e) {
+          document.removeEventListener('facetrackingEvent', function(event){});
         });
 
         var infoSource = document.getElementById('info-template').innerHTML,

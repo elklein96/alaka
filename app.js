@@ -1,12 +1,11 @@
 var express = require('express');
 var request = require('request');
 var http = require('http');
-var querystring = require('querystring');
 var fs = require('fs');
 var path = require('path');
-var toBuffer = require('typedarray-to-buffer');
 var spawn = require('child_process').spawn;
 var bodyParser = require('body-parser');
+var gm = require('gm').subClass({imageMagick: true});
 
 var generateRandomString = function(length) {
   var text = '';
@@ -28,7 +27,7 @@ child.stdout.on('data', function(data) {
 });
 
 app.use(express.static(__dirname + '/public'));
-app.use( bodyParser.json({limit:'1mb'}));
+app.use( bodyParser.json({limit:'10mb'}));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -42,19 +41,30 @@ process.on("uncaughtException", function(err){
 });
 
 app.post('/parse', function(req, res) {
-
-  console.log(req.body.top);
-  /*var face = req.body.face;
+  var imageBuffer = decodeBase64Image(req.body.raw);
+  var fileName = generateRandomString(8);
   var result = [];
 
-  fs.writeFile('./public/cache/image'+generateRandomString(8), face, function(err){
-    console.log(err);
-  });
-  */
-  /*var reverseImgConfig = {
+  function decodeBase64Image(dataString) {
+    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/), response = {};
+    if (matches.length !== 3) return new Error('Invalid input string');
+    response.type = matches[1];
+    response.data = new Buffer(matches[2], 'base64');
+
+    return response;
+  }
+
+  fs.writeFile('./public/cache/'+fileName+'.jpg', imageBuffer.data, function(err) {});
+  
+  /*gm(img).crop(req.body.right-req.body.left, req.body.top-req.body.bottom, req.body.right, req.body.bottom).stream('png', function (err, stdout, stderr) {
+    var writeStream = fs.createWriteStream('./public/cache/'+generateRandomString(8)+'.jpg');
+    stdout.pipe(writeStream);
+  });*/
+
+  var reverseImgConfig = {
     url: 'http://localhost:5000/search',
     headers: { 'Content-Type' : 'application/json'},
-    data: {"image_url" : "http://localhost:8888/public/test/chaplin.jpg"},
+    data: {"image_url" : "http://localhost:8888/public/test/fileName.jpg"},
     json: true
   };
 
@@ -66,6 +76,6 @@ app.post('/parse', function(req, res) {
   
   res.send({
     'actors': result
-  });*/
+  });
   //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
 });
