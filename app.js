@@ -5,7 +5,6 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var bodyParser = require('body-parser');
-var gm = require('gm').subClass({imageMagick: true});
 
 var generateRandomString = function(length) {
   var text = '';
@@ -21,10 +20,6 @@ var app = express();
 var server = http.createServer(app);
 
 var child  = spawn("python", ["./mrisa/mrisa_server.py"]);
-
-child.stdout.on('data', function(data) {
-  console.log("TEST "+data.toString());
-});
 
 app.use(express.static(__dirname + '/public'));
 app.use( bodyParser.json({limit:'10mb'}));
@@ -55,11 +50,6 @@ app.post('/parse', function(req, res) {
   }
 
   fs.writeFile('./public/cache/'+fileName+'.jpg', imageBuffer.data, function(err) {});
-  
-  /*gm(img).crop(req.body.right-req.body.left, req.body.top-req.body.bottom, req.body.right, req.body.bottom).stream('png', function (err, stdout, stderr) {
-    var writeStream = fs.createWriteStream('./public/cache/'+generateRandomString(8)+'.jpg');
-    stdout.pipe(writeStream);
-  });*/
 
   var reverseImgConfig = {
     url: 'http://localhost:5000/search',
@@ -70,7 +60,38 @@ app.post('/parse', function(req, res) {
 
   request.get(reverseImgConfig, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-        result.push(body);
+      var q = "";
+      function findMostReaptedWord(str){
+        var counts = {}, mr, mc;
+        str.match(/\w+/g).forEach(function(w){ counts[w]=(counts[w]||0)+1 });
+        for (var w in counts) {
+          if (!(counts[w]<mc)) {
+            mc = counts[w];
+            mr = w;
+          }
+        }
+        return mr;
+      }
+
+      for (var i in body.title) {
+        q = q+body.title[i];
+      }
+
+      var movieDataConfig = {
+        url: 'http://api.themoviedb.org/3/search/',
+        headers: { 'Content-Type' : 'application/json'},
+        form: {
+          api_key : "16bb0c5e653d13fc1759ae1ca661324b",
+          query   : q
+        },
+        json: true
+      };
+
+      request.get(movieDataConfig, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          result.push(body);
+        }
+      });
     }
   });
   

@@ -10,11 +10,11 @@
   <body style="overflow:hidden;">
     <div class="container">
       <video id="inputVideo" autoplay loop></video>
-      <canvas id="inputCanvas" style="display:hidden;"></canvas>
       <button id="button" class="btn-circle"></button>
 
       <div id="info"></div>
     </div>
+    <canvas id="inputCanvas"></canvas>
 
     <script id="info-template" type="text/x-handlebars-template">
       <div class="data">
@@ -33,7 +33,7 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script type="text/javascript" src="jquery.longpress.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.longpress.js"></script>
     <script src="/javascripts/headtracker.js"></script> 
     <script>
       (function() {

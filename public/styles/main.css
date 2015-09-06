@@ -16,13 +16,17 @@ html, body {
 }
 
 .btn-circle {
-  width: 45%;
-  height: 45%;
+  position:fixed;
+  top:75%;
+  left:50%;
+  width: 65px;
+  height: 65px;
   text-align: center;
   padding: 6px 0;
   font-size: 12px;
   line-height: 1.42;
   border-radius: 15px;
   opacity: 0.5;
-  z-index: 999999;
+  z-index: 99999;
+  background-color: #0F0F0F;
 }
