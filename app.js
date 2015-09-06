@@ -43,14 +43,14 @@ process.on("uncaughtException", function(err){
 
 app.post('/parse', function(req, res) {
 
-  //console.log(req.body);
-  var face = req.body.face;
+  console.log(req.body);
+  /*var face = req.body.face;
   var result = [];
 
   fs.writeFile('./public/cache/image'+generateRandomString(8), face, function(err){
     console.log(err);
   });
-  
+  */
   /*var reverseImgConfig = {
     url: 'http://localhost:5000/search',
     headers: { 'Content-Type' : 'application/json'},
