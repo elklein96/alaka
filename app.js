@@ -27,6 +27,10 @@ child.stdout.on('data', function(data) {
 });
 
 app.use(express.static(__dirname + '/public'));
+app.use(function(req, res, next){
+  res.setHeader('content-type', 'application/json');
+  next();
+});
 
 server.listen(process.env.PORT || 8888, function(){
   console.log("Express server listening on port %d", this.address().port);
