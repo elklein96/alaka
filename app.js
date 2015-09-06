@@ -19,7 +19,7 @@ var generateRandomString = function(length) {
 var app = express();
 var server = http.createServer(app);
 
-var child  = spawn("python", ["/mrisa/mrisa_server.py"]);
+var child  = spawn("python", ["./mrisa/mrisa_server.py"]);
 
 child.stdout.on('data', function(data) {
   console.log("TEST "+data.toString());
@@ -32,18 +32,23 @@ server.listen(process.env.PORT || 8888, function(){
 });
 
 app.get('/parse', function(req, res) {
-  var faces = req.query.faces;
+  var face = req.query.face;
   var result = [];
+  face = toBuffer(face);
 
+  var wstream = fs.createWriteStream('./public/cache/image'+generateRandomString(8));
+  wstream.write(face);
+  wstream.end();
+  
   for(var i=0; i<faces.length; i++){
-    var playlistOptions = {
+    var reverseImgConfig = {
       url: 'http://localhost:5000/search',
       headers: { 'Content-Type' : 'application/json'},
-      data: {"image_url" : "./public/test/chaplin.jpg"},
+      data: {"image_url" : "http://localhost:8888/public/test/chaplin.jpg"},
       json: true
     };
 
-  request.get(playlistOptions, function(error, response, body) {
+  request.get(reverseImgConfig, function(error, response, body) {
     if (!error && response.statusCode === 200) {
         result.push(body);
     }
@@ -51,11 +56,11 @@ app.get('/parse', function(req, res) {
   }
   
   res.send({
-    'playlist_info': playlist_info
+    'actors': result
   });
 
 
-  //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://upload.wikimedia.org/wikipedia/commons/2/29/Voyager_spacecraft.jpg"}'
+  //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
   /*if(req.query.playlist_url.charAt(req.query.playlist_url.length -1) != '/')
     req.query.playlist_url = req.query.playlist_url+"/";
 
