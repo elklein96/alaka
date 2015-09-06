@@ -48,9 +48,9 @@ app.post('/parse', function(req, res) {
   var result = [];
   face = toBuffer(new Uint32Array(face));
 
-  fs.write('./public/cache/image'+generateRandomString(8), face, function(err){
+  /*fs.write('./public/cache/image'+generateRandomString(8), face, function(err){
     console.log(err);
-  });
+  });*/
   
   /*var reverseImgConfig = {
     url: 'http://localhost:5000/search',
