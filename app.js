@@ -48,7 +48,7 @@ app.post('/parse', function(req, res) {
   var result = [];
   face = toBuffer(face);
 
-  fs.write('./public/cache/image'+generateRandomString(8), face, function(err){
+  fs.write('./public/cache/image'+generateRandomString(8), face+"", function(err){
     console.log(err);
   });
   
