@@ -50,6 +50,8 @@
           if(event.confidence === 1){
             var imgData = ctx.getImageData(event.x-event.width/2, event.y-event.height/2, event.width, event.height);
 
+            console.log(imgData.data);
+
             $.ajax({
               method: 'POST',
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
