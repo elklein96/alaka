@@ -52,7 +52,7 @@
 
             console.log(imgData.data);
 
-            $.ajax({
+            /*$.ajax({
               method: 'POST',
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
               contentType: "application/json",
@@ -67,7 +67,12 @@
               error: function(response) {
                 console.log(response);
               }
-            });
+            });*/
+
+            var xhr = new XMLHttpRequest;
+            xhr.open("POST", 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse', false);
+            xhr.send(imgData.data);
+            
           }
           ctx.beginPath();
           ctx.strokeStyle="green";

@@ -62,10 +62,10 @@ app.post('/parse', function(req, res) {
     if (!error && response.statusCode === 200) {
         result.push(body);
     }
-  });*/
+  });
   
   res.send({
     'actors': result
-  });
+  });*/
   //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
 });
