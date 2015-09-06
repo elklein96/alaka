@@ -32,7 +32,7 @@ server.listen(process.env.PORT || 8888, function(){
   console.log("Express server listening on port %d", this.address().port);
 });
 
-process.on(String uncaughtException, function(err){
+process.on("uncaughtException", function(err){
   console.log(err);
 });
 
