@@ -44,7 +44,7 @@ process.on("uncaughtException", function(err){
 app.post('/parse', function(req, res) {
 
   //console.log(req.body);
-  var face = JSON.parse(req.body).face;
+  var face = req.body.face;
   var result = [];
   face = toBuffer(face);
 
