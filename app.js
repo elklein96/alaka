@@ -52,7 +52,7 @@ app.post('/parse', function(req, res) {
   wstream.write(face);
   wstream.end();
   
-  for(var i=0; i<faces.length; i++){
+  for(var i=0; i<face.length; i++){
     var reverseImgConfig = {
       url: 'http://localhost:5000/search',
       headers: { 'Content-Type' : 'application/json'},
