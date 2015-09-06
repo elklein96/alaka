@@ -56,29 +56,8 @@ app.get('/parse', function(req, res) {
   });
   }
   
-  res.send({
+  /*res.send({
     'actors': result
-  });
-
-
-  //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
-  /*if(req.query.playlist_url.charAt(req.query.playlist_url.length -1) != '/')
-    req.query.playlist_url = req.query.playlist_url+"/";
-
-  var playlist_id = req.query.playlist_url.match('playlist\/(.*)\/')[1];
-
-  var playlistOptions = {
-    url: 'https://api.spotify.com/v1/users/'+req.query.user_id+'/playlists/'+playlist_id+'/tracks',
-    headers: { 'Content-Type': 'application/json ' + req.query.access_token },
-    json: true
-  };
-
-  request.get(playlistOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var playlist_info = body;
-      res.send({
-        'playlist_info': playlist_info
-      });
-    }
   });*/
+  //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
 });
