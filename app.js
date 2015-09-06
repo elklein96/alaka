@@ -43,7 +43,7 @@ process.on("uncaughtException", function(err){
 
 app.post('/parse', function(req, res) {
 
-  console.log(req.body);
+  console.log(req.body.data);
   /*var face = req.body.face;
   var result = [];
   face = toBuffer(face);
