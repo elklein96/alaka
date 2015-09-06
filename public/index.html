@@ -48,15 +48,17 @@
 
         document.addEventListener('facetrackingEvent', function(event){
           if(event.confidence === 1){
-            var imgData = ctx.getImageData(event.x-event.width/2, event.y-event.height/2, event.width, event.height);
-
-            console.log(imgData.data);
-
-            /*$.ajax({
+            $.ajax({
               method: 'POST',
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
-              contentType: "application/json",
-              data: JSON.stringify(imgData.data.buffer),
+              contentType: "multipart/form-data",
+              data: {
+                face: canvasInput.toDataURL(),
+                left: event.x-event.width/2,
+                top: event.y-event.height/2,
+                right: event.width,
+                bottom: event.height
+              },
               success: function(response) {
                 console.log(response);
                 infoPlaceholder.innerHTML = infoTemplate({
@@ -67,12 +69,7 @@
               error: function(response) {
                 console.log(response);
               }
-            });*/
-
-            var xhr = new XMLHttpRequest;
-            xhr.open("POST", 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse', false);
-            xhr.send(imgData.data);
-            
+            });
           }
           ctx.beginPath();
           ctx.strokeStyle="green";
