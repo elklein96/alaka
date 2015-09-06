@@ -48,24 +48,22 @@ app.post('/parse', function(req, res) {
   var result = [];
   face = toBuffer(face);
 
-  var wstream = fs.createWriteStream('./public/cache/image'+generateRandomString(8));
-  wstream.write(face);
-  wstream.end();
+  fs.write('./public/cache/image'+generateRandomString(8), face, function(err){
+    console.log(err);
+  });
   
-  for(var i=0; i<face.length; i++){
-    var reverseImgConfig = {
-      url: 'http://localhost:5000/search',
-      headers: { 'Content-Type' : 'application/json'},
-      data: {"image_url" : "http://localhost:8888/public/test/chaplin.jpg"},
-      json: true
-    };
+  /*var reverseImgConfig = {
+    url: 'http://localhost:5000/search',
+    headers: { 'Content-Type' : 'application/json'},
+    data: {"image_url" : "http://localhost:8888/public/test/chaplin.jpg"},
+    json: true
+  };
 
   request.get(reverseImgConfig, function(error, response, body) {
     if (!error && response.statusCode === 200) {
         result.push(body);
     }
-  });
-  }
+  });*/
   
   res.send({
     'actors': result
