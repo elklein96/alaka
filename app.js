@@ -4,6 +4,7 @@ var http = require('http');
 var querystring = require('querystring');
 var fs = require('fs');
 var path = require('path');
+var toBuffer = require('typedarray-to-buffer');
 var spawn = require('child_process').spawn;
 
 var generateRandomString = function(length) {
