@@ -53,10 +53,10 @@
             faceFrames.push(imgData.data);
 
             $.ajax({
-              method: 'GET',
+              method: 'POST',
               url: 'http://ec2-52-6-151-159.compute-1.amazonaws.com/parse',
               data: {
-                face: faceFrames
+                face: "test"
               },
               success: function(response) {
                 infoPlaceholder.innerHTML = infoTemplate({

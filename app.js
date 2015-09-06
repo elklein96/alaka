@@ -36,7 +36,7 @@ process.on("uncaughtException", function(err){
   console.log(err);
 });
 
-app.get('/parse', function(req, res) {
+app.post('/parse', function(req, res) {
   var face = req.query.face;
   var result = [];
   face = toBuffer(face);
@@ -60,8 +60,8 @@ app.get('/parse', function(req, res) {
   });
   }
   
-  /*res.send({
+  res.send({
     'actors': result
-  });*/
+  });
   //curl -X POST -H "Content-Type: application/json" -d '{"image_url":"http://ec2-52-6-151-159.compute-1.amazonaws.com/test/chaplin.jpg"}' http://localhost:5000/search
 });
