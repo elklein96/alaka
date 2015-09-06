@@ -59,6 +59,7 @@
                 face: faceFrames
               },
               success: function(response) {
+                console.log(response);
                 infoPlaceholder.innerHTML = infoTemplate({
                   actors: response.actors,
                   movie: response.movie
